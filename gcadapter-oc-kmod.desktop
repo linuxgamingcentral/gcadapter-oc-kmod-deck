@@ -1,6 +1,6 @@
 #!/usr/bin/env xdg-open
 [Desktop Entry]
-Exec=cd /tmp/ && wget https://raw.githubusercontent.com/linuxgamingcentral/gcadapter-oc-kmod-deck/main/install_gcadapter-oc-kmod.sh && chmod +x install_gcadapter-oc-kmod.sh && ./install_gcadapter-oc-kmod.sh
+Exec=cd /tmp/ && rm -f install_gcadapter-oc-kmod.sh && wget https://raw.githubusercontent.com/linuxgamingcentral/gcadapter-oc-kmod-deck/main/install_gcadapter-oc-kmod.sh && chmod +x install_gcadapter-oc-kmod.sh && ./install_gcadapter-oc-kmod.sh
 Icon=steamdeck-gaming-return
 Name=Install GC Adapter OC Kmod
 StartupNotify=false
