@@ -54,14 +54,6 @@ if (( $EUID != 0 )); then
     exit 1
 fi
 
-# Progress bar
-zen_nospam --progress \
-  --title="GC Adapter OC Kmod" \
-  --width=300 --height=100 \
-  --text="Installing..." \
-  --percentage=0 \
-  --no-cancel
-
 # Disable the filesystem until we're done
 sudo steamos-readonly disable
 
@@ -90,5 +82,15 @@ echo "gcadapter_oc" | sudo tee /etc/modules-load.d/gcadapter_oc.conf
 
 # Lock the filesystem back up
 sudo steamos-readonly enable
+
+# Progress bar
+echo "100" ; echo "# Install finished, installer can now be closed";
+) |
+zen_nospam --progress \
+  --title="GC Adapter OC Kmod" \
+  --width=300 --height=100 \
+  --text="Installing..." \
+  --percentage=0 \
+  --no-cancel
 
 zen_nospam --title="GC Adapter OC Kmod" --width=300 --height=100 --info --text "Installation successful!"
