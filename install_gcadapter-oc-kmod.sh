@@ -1,16 +1,16 @@
 #!/bin/bash
 
-# if a password was set by decky, this will run when the program closes
+# If a password was set by the program, this will run when the program closes
 temp_pass_cleanup() {
   echo $PASS | sudo -S -k passwd -d deck
 }
 
-# removes unhelpful GTK warnings
+# Removes unhelpful GTK warnings
 zen_nospam() {
   zenity 2> >(grep -v 'Gtk' >&2) "$@"
 }
 
-# check if JQ is installed
+# Check if JQ is installed
 if ! command -v jq &> /dev/null
 then
     echo "JQ could not be found, please install it"
@@ -18,25 +18,25 @@ then
     exit 1
 fi
 
-# check if github.com is reachable
+# Check if GitHub is reachable
 if ! curl -Is https://github.com | head -1 | grep 200 > /dev/null
 then
     echo "Github appears to be unreachable, you may not be connected to the internet"
     exit 1
 fi
 
-# if the script is not root yet, get the password and rerun as root
+# If the script is not root yet, get the password and rerun as root
 if (( $EUID != 0 )); then
     PASS_STATUS=$(passwd -S deck 2> /dev/null)
     if [ "$PASS_STATUS" = "" ]; then
-        echo "Deck user not found. Continuing anyway, as it probably just means user is on a non-steamos system."
+        echo "Deck user not found. Continuing anyway, as it probably just means user is on a non-SteamOS system."
     fi
 
     if [ "${PASS_STATUS:5:2}" = "NP" ]; then # if no password is set
-        if ( zen_nospam --title="GC Adapter OC Kmod" --width=300 --height=200 --question --text="You appear to have not set an admin password.\nDecky can still install by temporarily setting your password to 'Decky!' and continuing, then removing it when the installer finishes\nAre you okay with that?" ); then
-            yes "Decky!" | passwd deck # set password to Decky!
+        if ( zen_nospam --title="GC Adapter OC Kmod" --width=300 --height=200 --question --text="You appear to have not set an admin password.\nGC Adapter OC Kmod can still install by temporarily setting your password to 'Smash!' and continuing, then removing it when the installer finishes\nAre you okay with that?" ); then
+            yes "Smash!" | passwd deck # set password to Smash!
             trap temp_pass_cleanup EXIT # make sure that password is removed when application closes
-            PASS="Decky!"
+            PASS="Smash!"
         else exit 1; fi
     else
         # get password
@@ -55,14 +55,14 @@ if (( $EUID != 0 )); then
     fi
 
     if ! [ $USER = "deck" ]; then
-        zen_nospam --title="GC Adapter OC Kmod" --width=300 --height=100 --warning --text "You appear to not be on a deck.\nDecky should still mostly work, but you may not get full functionality."
+        zen_nospam --title="GC Adapter OC Kmod" --width=300 --height=100 --warning --text "Error: you're likely not using a Steam Deck. Please note this installer will only work said device."
     fi
     
     echo "$PASS" | sudo -S -k bash "$0" "$@" # rerun script as root
     exit 1
 fi
 
-# Disable the filesystem
+# Disable the filesystem until we're done
 sudo steamos-readonly disable
 
 # Get pacman keys
@@ -88,7 +88,7 @@ sudo cp gcadapter_oc.ko "/usr/lib/modules/$(uname -r)/extra"
 sudo depmod
 echo "gcadapter_oc" | sudo tee /etc/modules-load.d/gcadapter_oc.conf
 
-# Re-enable readonly filesystem
+# Lock the filesystem back up
 sudo steamos-readonly enable
 
 echo "100" ; echo "# Install finished, installer can now be closed";
