@@ -10,18 +10,10 @@ zen_nospam() {
   zenity 2> >(grep -v 'Gtk' >&2) "$@"
 }
 
-# Check if JQ is installed
-if ! command -v jq &> /dev/null
-then
-    echo "JQ could not be found, please install it"
-    echo "Info on how to install it can be found at https://stedolan.github.io/jq/download/"
-    exit 1
-fi
-
 # Check if GitHub is reachable
 if ! curl -Is https://github.com | head -1 | grep 200 > /dev/null
 then
-    echo "Github appears to be unreachable, you may not be connected to the internet"
+    echo "GitHub appears to be unreachable, you may not be connected to the Internet."
     exit 1
 fi
 
@@ -29,10 +21,10 @@ fi
 if (( $EUID != 0 )); then
     PASS_STATUS=$(passwd -S deck 2> /dev/null)
     if [ "$PASS_STATUS" = "" ]; then
-        echo "Deck user not found. Continuing anyway, as it probably just means user is on a non-SteamOS system."
+        echo "Warning: Deck user not found!"
     fi
 
-    if [ "${PASS_STATUS:5:2}" = "NP" ]; then # if no password is set
+    if [ "${PASS_STATUS:5:2}" = "NP" ]; then # if no password is set, set up a temporary password to Smash!
         if ( zen_nospam --title="GC Adapter OC Kmod" --width=300 --height=200 --question --text="You appear to have not set an admin password.\nGC Adapter OC Kmod can still install by temporarily setting your password to 'Smash!' and continuing, then removing it when the installer finishes\nAre you okay with that?" ); then
             yes "Smash!" | passwd deck # set password to Smash!
             trap temp_pass_cleanup EXIT # make sure that password is removed when application closes
@@ -49,7 +41,7 @@ if (( $EUID != 0 )); then
             if ( echo "$PASS" | sudo -S -k true ); then
                 FINISHED="true"
             else
-                zen_nospam --title="GC Adapter OC Kmod" --width=150 --height=40 --info --text "Incorrect Password"
+                zen_nospam --title="GC Adapter OC Kmod" --width=150 --height=40 --info --text "Incorrect password!"
             fi
         done
     fi
