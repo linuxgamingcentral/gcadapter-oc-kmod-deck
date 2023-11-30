@@ -1,4 +1,4 @@
-# gcadapter-oc-kmod-deck
+# GCC Adapter Overclocking Script for Steam Deck
 Convenient desktop file for overclocking the GameCube controller adapter on Steam Deck. Should persist across reboots.
 
 Download the [desktop file]() (right-click, Save As) and run it. After installation your GCC adapter should now be overclocked to 1,000 Hz. That's it!
