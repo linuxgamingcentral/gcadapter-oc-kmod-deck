@@ -62,6 +62,15 @@ if (( $EUID != 0 )); then
     exit 1
 fi
 
+echo "100" ; echo "# Install finished, installer can now be closed";
+) |
+zen_nospam --progress \
+  --title="GC Adapter OC Kmod" \
+  --width=300 --height=100 \
+  --text="Installing..." \
+  --percentage=0 \
+  --no-cancel # not actually sure how to make the cancel work properly, so it's just not there unless someone else can figure it out
+
 # Disable the filesystem until we're done
 sudo steamos-readonly disable
 
@@ -90,15 +99,6 @@ echo "gcadapter_oc" | sudo tee /etc/modules-load.d/gcadapter_oc.conf
 
 # Lock the filesystem back up
 sudo steamos-readonly enable
-
-echo "100" ; echo "# Install finished, installer can now be closed";
-) |
-zen_nospam --progress \
-  --title="GC Adapter OC Kmod" \
-  --width=300 --height=100 \
-  --text="Installing..." \
-  --percentage=0 \
-  --no-cancel # not actually sure how to make the cancel work properly, so it's just not there unless someone else can figure it out
 
 if [ "$?" = -1 ] ; then
         zen_nospam --title="GC Adapter OC Kmod" --width=150 --height=70 --error --text="Download interrupted."
