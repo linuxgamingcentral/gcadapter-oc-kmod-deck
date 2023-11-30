@@ -17,7 +17,7 @@ then
     exit 1
 fi
 
-# If the script is not root yet, get the password and rerun as root
+# If the script is not root yet, get the password and re-run as root
 if (( $EUID != 0 )); then
     PASS_STATUS=$(passwd -S deck 2> /dev/null)
     if [ "$PASS_STATUS" = "" ]; then
@@ -46,13 +46,21 @@ if (( $EUID != 0 )); then
         done
     fi
 
-    if ! [ $USER = "deck" ]; then
+    if ! [ $USER = "deck" ]; then # check if the user is on Deck. If not, provide a warning.
         zen_nospam --title="GC Adapter OC Kmod" --width=300 --height=100 --warning --text "Error: you're likely not using a Steam Deck. Please note this installer will only work said device."
     fi
     
     echo "$PASS" | sudo -S -k bash "$0" "$@" # rerun script as root
     exit 1
 fi
+
+# Progress bar
+zen_nospam --progress \
+  --title="GC Adapter OC Kmod" \
+  --width=300 --height=100 \
+  --text="Installing..." \
+  --percentage=0 \
+  --no-cancel
 
 # Disable the filesystem until we're done
 sudo steamos-readonly disable
@@ -83,4 +91,4 @@ echo "gcadapter_oc" | sudo tee /etc/modules-load.d/gcadapter_oc.conf
 # Lock the filesystem back up
 sudo steamos-readonly enable
 
-zen_nospam --title="GC Adapter OC Kmod" --width=150 --height=40 --info --text "Installation successful!"
+zen_nospam --title="GC Adapter OC Kmod" --width=300 --height=100 --info --text "Installation successful!"
