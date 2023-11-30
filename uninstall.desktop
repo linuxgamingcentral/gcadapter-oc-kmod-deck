@@ -1,6 +1,6 @@
 #!/usr/bin/env xdg-open
 [Desktop Entry]
-Exec=cd /tmp/ && wget https://raw.githubusercontent.com/linuxgamingcentral/gcadapter-oc-kmod-deck/main/uninstall_gcadapter-oc-kmod.sh && chmod +x uninstall_gcadapter-oc-kmod.sh && ./uninstall_gcadapter-oc-kmod.sh
+Exec=cd /tmp/ && rm -f uninstall_gcadapter-oc-kmod.sh && wget https://raw.githubusercontent.com/linuxgamingcentral/gcadapter-oc-kmod-deck/main/uninstall_gcadapter-oc-kmod.sh && chmod +x uninstall_gcadapter-oc-kmod.sh && ./uninstall_gcadapter-oc-kmod.sh
 Icon=delete
 Name=Uninstall GC Adapter OC Kmod
 StartupNotify=false
