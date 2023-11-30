@@ -49,7 +49,7 @@ fi
 
 sudo steamos-readonly disable
 
-cd /tmp/gcadapter-oc-kmod/
+cd gcadapter-oc-kmod/
 sudo rmmod gcadapter_oc.ko
 make clean
 sudo rm /usr/lib/modules/$(uname -r)/extra/gcadapter_oc.ko
