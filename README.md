@@ -5,6 +5,8 @@ Download the [desktop file](https://raw.githubusercontent.com/linuxgamingcentral
 
 [ocing_gcc_on_deck.webm](https://github.com/linuxgamingcentral/gcadapter-oc-kmod-deck/assets/101075966/7484d587-98b8-4e40-8821-78e72e6556ba)
 
+Video tutorial available on [YouTube](https://www.youtube.com/watch?v=9Vfg3-n8peE).
+
 If you want to uninstall, download the [uninstall desktop file](https://raw.githubusercontent.com/linuxgamingcentral/gcadapter-oc-kmod-deck/main/uninstall.desktop) and repeat the same steps.
 
 See my [guide](https://linuxgamingcentral.com/posts/overclock-gc-adapter-on-steam-deck/) for more info.
